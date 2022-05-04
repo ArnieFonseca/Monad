@@ -1,5 +1,5 @@
 """Import maybe package"""
-from functional.maybe import Maybe,tryCatch
+from functional.maybe import Maybe
 
 ### Data
 developers = [
@@ -16,13 +16,13 @@ def getDeveloper(name:str)->Maybe:
     """Retrive the Maybe Developer -> Pure Function"""
 
     get_data = lambda :list(filter(lambda x : getName(x) == name,developers))[0]
-    return  tryCatch(get_data)
+    return  Maybe.tryCatch(get_data)
 
 def getDeveloperSkill(developer)->Maybe:
     """Retrive the Maybe Developer Skill -> Pure Function"""
 
     get_data = lambda : getSkill(developer)
-    return  tryCatch(get_data)
+    return  Maybe.tryCatch(get_data)
 
 def main(lst:list)->None:
     """Entry Point -> Inpure Function"""
