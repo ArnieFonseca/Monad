@@ -17,14 +17,24 @@ class Maybe(ABC):
     def match(self,fn_just:Callable,fn_nothing:Callable)->Maybe:
         """Method to unwrap the value for Just or None"""
 
-    def bind(self,func)->Maybe:
+    def bind(self,_:Any)->Maybe:
         """Method to unwrap and call another function """
 
     def __str__(self)->str:
         """Method for string representation"""
 
-    def __or__(self, func:Any):
+    def __or__(self, _:Any):
         pass
+    
+    @staticmethod
+    def tryCatch(func:Callable)->Maybe:
+        """Generalized Try/Catch The input function will be evaluate, onsucess an embelished/elevated
+        result will be returned otherwise Nothing\n
+        tryCatch:: func:Callable -> Maybe"""
+        try:
+            return Just(func())
+        except:
+            return Nothing()
 
 class Just(Maybe):
     """Just derive class that represet the existance of the value"""
@@ -67,12 +77,3 @@ class Nothing(Maybe):
         return 'Nothing()'
     def __or__(self, func):
         return self.map(func)
-
-def tryCatch(func:Callable)->Maybe:
-    """Generalized Try/Catch The input function will be evaluate, onsucess an embelished/elevated
-    result will be returned otherwise Nothing\n
-    tryCatch:: func:Callable -> Maybe"""
-    try:
-        return Just(func())
-    except:
-        return Nothing()
